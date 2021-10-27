@@ -34,7 +34,7 @@ public class FileIO_Handler {
         }
         catch (Exception e) {
 //            e.printStackTrace();
-            System.out.println(e.getMessage());
+            AuditLogger.addEvent(e.getMessage());
         }
         finally
         {
@@ -42,9 +42,10 @@ public class FileIO_Handler {
                 assert fileReader != null;
                 fileReader.close();
             } catch (IOException e) {
-//                e.printStackTrace();
+               AuditLogger.addEvent(e.getMessage());
             }
         }
+        AuditLogger.addEvent("Loaded data from file "+input_name);
         return allItems;
     }
 
@@ -64,8 +65,12 @@ public class FileIO_Handler {
                 bw.flush();
             }
             bw.close();
+            AuditLogger.addEvent("Data saved to file "+output_name);
         } catch (Exception e) {
             System.out.println("Error: "+e.getMessage());
+        }
+        finally {
+            AuditLogger.saveAuditLogger();
         }
     }
 }
