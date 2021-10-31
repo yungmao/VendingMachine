@@ -6,19 +6,34 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * Used to save events during Vending Machine run.
+ */
 public class AuditLogger {
     private static ArrayList<String> auditLogger = new ArrayList<String>();
 
+    /**
+     * Method used to access Audit Logger
+     * @return Audit Logger as an ArrayList
+     */
     public static ArrayList<String> getAuditLogger() {
         return auditLogger;
     }
 
+    /**
+     * Method used to save event message in Audit Logger
+     * @param event Event text to be saved to Audit Logger
+     */
     public static void addEvent(String event) {
         StringBuilder sb = new StringBuilder();
-        sb.append(getTime() + "\n" + event +"\n");
+        sb.append(getTime() + "\n" + event + "\n");
         auditLogger.add(sb.toString());
     }
 
+    /**
+     * Method used to get actual local time
+     * @return Local date time in form: YYYY-MM-DD HH:MM:SS
+     */
     public static String getTime() {
         String datetime = LocalDateTime.now().toString();
         String date = datetime.substring(0, 10);
@@ -29,9 +44,12 @@ public class AuditLogger {
 
     }
 
+    /**
+     * Method used to save current AuditLogger to text file
+     */
     public static void saveAuditLogger() {
         StringBuilder content = new StringBuilder();
-        for(String entry:AuditLogger.getAuditLogger()){
+        for (String entry : AuditLogger.getAuditLogger()) {
             content.append(entry);
         }
         String path = "src/main/resources/Logger.txt";
@@ -42,8 +60,6 @@ public class AuditLogger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
 }

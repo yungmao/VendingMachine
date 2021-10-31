@@ -1,12 +1,19 @@
 package org.example;
 
-import java.time.LocalDateTime;
+
+import java.util.Scanner;
 
 /**
- * @// TODO: 27.10.2021  Refractor, Make new tests, More exceptions/try_catch, Alpha is done now to beta version.
+ * Main class used to instantiate Vending Machine object
  */
 public class App {
+    public static Scanner input = new Scanner(System.in);
+    /**
+     * Method instantiate Vending Machine object from inserted input
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
-VendingMachine vm = new VendingMachine("product_list");
+        String filename = input.nextLine();
+        VendingMachine vm = new VendingMachine(filename);
     }
 }

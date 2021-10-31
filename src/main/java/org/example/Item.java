@@ -2,11 +2,13 @@ package org.example;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 
+/**
+ * Representation of a product in Vending Machine
+ */
 public class Item {
     private String name;
-    private BigDecimal cost; //TODO Change to BigDecimal
+    private BigDecimal cost;
     private int amount;
 
     public String getName() {
@@ -22,7 +24,7 @@ public class Item {
     }
 
     public void setCost(double cost) {
-        this.cost = new BigDecimal(cost);
+        this.cost = new BigDecimal(cost).setScale(2,RoundingMode.HALF_EVEN);
     }
 
     public int getAmount() {
@@ -48,6 +50,10 @@ public class Item {
         }
     }
 
+    /**
+     * Parsing item object as a string
+     * @return Parsed to string Item
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.name);
