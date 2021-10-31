@@ -6,6 +6,9 @@ import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Class represent Vending Machine with its functionality - selling available products.
+ */
 public class VendingMachine {
     public static Scanner input = new Scanner(System.in);
     private ArrayList<Item> vendingMachine;

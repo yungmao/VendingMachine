@@ -13,6 +13,7 @@ public class App {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
+        System.out.printf("File name: ");
         String filename = input.nextLine();
         VendingMachine vm = new VendingMachine(filename);
     }
