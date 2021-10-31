@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
@@ -29,31 +30,31 @@ public class ChangeTest {
 
     @Test
     public void giveChange30cents() {
-        Change.giveChange(30);
+        Change.giveChange(new BigDecimal(0.30));
         assertEquals("1 quarter/s\n" + "1 nickle/s", outContent.toString().trim());
     }
 
     @Test
     public void giveChange150cents() {
-        Change.giveChange(150);
+        Change.giveChange(new BigDecimal(1.50));
         assertEquals("1 dollar coin/s\n" + "1 half-dollar coin/s", outContent.toString().trim());
     }
 
     @Test
     public void giveNoChange() {
-        Change.giveChange(0);
+        Change.giveChange(new BigDecimal(0));
         assertEquals("", outContent.toString().trim());
     }
 
     @Test
-    public void giveChange2cents() {
-        Change.giveChange(3);
+    public void giveChange3cents() {
+        Change.giveChange(new BigDecimal(0.03));
         assertEquals("3 penny/ies", outContent.toString().trim());
     }
 
     @Test
     public void giveChange24cents() {
-        Change.giveChange(24);
+        Change.giveChange(new BigDecimal(0.24));
         assertEquals("2 dime/s\n4 penny/ies", outContent.toString().trim());
     }
 

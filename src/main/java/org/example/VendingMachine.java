@@ -1,6 +1,8 @@
 package org.example;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,8 +12,8 @@ public class VendingMachine {
 
     VendingMachine(String input) {
         this.vendingMachine = FileIO_Handler.readCSV(input);
-        buyAvailableProduct();
-        FileIO_Handler.writeCSV(vendingMachine,"save "+input);
+        runVendingMachine();
+        FileIO_Handler.writeCSV(vendingMachine, "save " + input);
     }
 
     public ArrayList<Item> getVendingMachine() {
@@ -19,11 +21,12 @@ public class VendingMachine {
     }
 
     public void printAvailableProducts() {
-        Map<String, Double> availableProducts = getVendingMachine().stream()
+        Map<String, BigDecimal> availableProducts = getVendingMachine().stream()
                 .filter(p -> p.getAmount() > 0)
                 .collect(Collectors.toMap(Item::getName, Item::getCost));
-        for (Map.Entry<String, Double> entry : availableProducts.entrySet()) {
-            System.out.print(entry.getKey() + " cost $" + entry.getValue().toString() + "\n");
+        for (Map.Entry<String, BigDecimal> entry : availableProducts.entrySet()) {
+            BigDecimal price = entry.getValue().setScale(2, RoundingMode.HALF_EVEN);
+            System.out.print(entry.getKey() + " cost $" + price + "\n");
         }
     }
 
@@ -37,36 +40,52 @@ public class VendingMachine {
         return searched_item.get();
     }
 
-    public double sellIfCan(Item item, int customer_money) throws Exception {
-        double wanted_item_price = item.getCost();
-        double change = 0;
-        if (wanted_item_price > customer_money) {
+    public BigDecimal sellIfCan(Item item, double money) throws Exception {
+        BigDecimal wanted_item_price = item.getCost();
+        BigDecimal customer_money = new BigDecimal(money);
+        BigDecimal change = new BigDecimal(0);
+        if (wanted_item_price.compareTo(customer_money) == 1) {
             throw new Exception("Not enough money");
         } else {
-            change = customer_money - wanted_item_price;
-            item.setAmount(item.getAmount()-1);
+            change = customer_money.subtract(wanted_item_price);
+            item.setAmount(item.getAmount() - 1);
+            System.out.println("Sold " + item.getName());
         }
-        return change;
+        return change.setScale(2,RoundingMode.HALF_UP);
     }
 
     public void buyAvailableProduct() {
         printAvailableProducts();
         System.out.printf("How much money do you insert?: ");
-        int money = input.nextInt();
+        double money = input.nextDouble();
         input.nextLine();
-        System.out.println("What would you like to buy: ");
+        System.out.printf("What would you like to buy: ");
         String name_of_product = input.nextLine();
         try {
             Item found_item = searchItem(name_of_product);
             try {
-                sellIfCan(found_item, money);
+                BigDecimal change = sellIfCan(found_item, money);
+                Change.giveChange(change);
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 AuditLogger.addEvent(e.getMessage());
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             AuditLogger.addEvent(e.getMessage());
         }
+    }
 
-
+    public void runVendingMachine() {
+        while (true) {
+            buyAvailableProduct();
+            System.out.printf("Do you want to continue(y/n):");
+            String option = input.nextLine();
+            if (option.equalsIgnoreCase("y")) {
+                buyAvailableProduct();
+            } else if (option.equalsIgnoreCase("n")) {
+                break;
+            }
+        }
     }
 }

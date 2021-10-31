@@ -1,71 +1,91 @@
 package org.example;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.function.BiFunction;
+
 public class Change {
 
     /**
      * Enum for coins with its value in cents
      */
     public enum Coins {
-        DOLLAR(100), HALF(50), QUARTER(25), DIME(10), NICKLE(5), PENNY(1);
-        private final int value_cents;
+        DOLLAR(1), HALF(0.5), QUARTER(0.25),
+        DIME(0.1), NICKLE(0.05), PENNY(0.01);
+        private final BigDecimal value_cents;
 
-        Coins(int value_cents) {
-            this.value_cents = value_cents;
+        Coins(double value) {
+            this.value_cents = new BigDecimal(value);
         }
 
-        public int getValue() {
-            return value_cents;
+        public BigDecimal getValue() {
+            return value_cents.setScale(2,RoundingMode.HALF_EVEN);
         }
     }
 
-    public static void giveChange(int change) {
-        int amount = 0;
-        int rest = change;
-        for (Coins coin : Coins.values())
+    public static void giveChange(BigDecimal change) {
+        BigDecimal amount = new BigDecimal(0);
+        BigDecimal rest = change.setScale(2,RoundingMode.HALF_EVEN);
+        for (Coins coin : Coins.values()) {
             switch (coin) {
                 case DOLLAR:
-                    amount = rest/ coin.getValue();
-                    if (amount >= 1) {
-                        rest = rest % coin.getValue();
-                        System.out.print(amount + " dollar coin/s\n");
+                    amount = rest.divide(coin.getValue(),2, RoundingMode.HALF_EVEN);
+                    if (canReturnCoin(amount)) {
+                        rest = rest.remainder(coin.getValue()).setScale(2, RoundingMode.HALF_EVEN);
+                        System.out.print(amount.intValue() + " dollar coin/s\n");
                     }
                     break;
                 case HALF:
-                    amount = rest/ coin.getValue();
-                    if (amount >= 1) {
-                        rest = rest % coin.getValue();
-                        System.out.print(amount + " half-dollar coin/s\n");
+                    amount = rest.divide(coin.getValue(),2, RoundingMode.HALF_EVEN);
+                    if (canReturnCoin(amount)) {
+                        rest = rest.remainder(coin.getValue()).setScale(2, RoundingMode.HALF_EVEN);
+                        System.out.print(amount.intValue() + " half-dollar coin/s\n");
                     }
                     break;
                 case QUARTER:
-                    amount = rest/ coin.getValue();
-                    if (amount >= 1) {
-                        rest = rest % coin.getValue();
-                        System.out.print(amount + " quarter/s\n");
+                    amount = rest.divide(coin.getValue(),2, RoundingMode.HALF_EVEN);
+                    if (canReturnCoin(amount)) {
+                        rest = rest.remainder(coin.getValue()).setScale(2, RoundingMode.HALF_EVEN);
+                        System.out.print(amount.intValue() + " quarter/s\n");
                     }
                     break;
                 case DIME:
-                    amount = rest/ coin.getValue();
-                    if (amount >= 1) {
-                        rest = rest % coin.getValue();
-                        System.out.print(amount + " dime/s\n");
+                    amount = rest.divide(coin.getValue(),2, RoundingMode.HALF_EVEN);
+                    if (canReturnCoin(amount)) {
+                        rest = rest.remainder(coin.getValue()).setScale(2, RoundingMode.HALF_EVEN);
+                        System.out.print(amount.intValue() + " dime/s\n");
                     }
                     break;
                 case NICKLE:
-                    amount = rest/ coin.getValue();
-                    if (amount >= 1) {
-                        rest = rest % coin.getValue();
-                        System.out.print(amount + " nickle/s\n");
+                    amount =rest.divide(coin.getValue(),2, RoundingMode.HALF_EVEN);
+                    if (canReturnCoin(amount)) {
+                        rest = rest.remainder(coin.getValue()).setScale(2, RoundingMode.HALF_EVEN);
+                        System.out.print(amount.intValue() + " nickle/s\n");
                     }
                     break;
                 case PENNY:
-                    amount = rest/ coin.getValue();
-                    if (amount >= 1) {
-                        rest = rest % coin.getValue();
-                        System.out.print(amount + " penny/ies\n");
+                    amount = rest.divide(coin.getValue(),2, RoundingMode.HALF_EVEN);
+                    if (canReturnCoin(amount)) {
+                        rest = rest.remainder(coin.getValue()).setScale(2, RoundingMode.HALF_EVEN);
+                        System.out.print(amount.intValue() + " penny/ies\n");
                     }
                     break;
             }
+        }
     }
 
+    public  static  boolean canReturnCoin(BigDecimal amount){
+        boolean canReturn = false;
+        if(amount.compareTo(new BigDecimal(1))==0){
+            canReturn=true;
+        }
+        else if (amount.compareTo(new BigDecimal(1))==1){
+            canReturn=true;
+        }
+        else if (amount.compareTo(new BigDecimal(1))==-1){
+            canReturn=false;
+        }
+        return canReturn;
+    }
 }
+

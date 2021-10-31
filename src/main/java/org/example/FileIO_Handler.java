@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class FileIO_Handler {
 
 
-    private static final String FILEPATH = "C:\\Users\\Student241165\\IdeaProjects\\VendingMachine\\src\\test\\resources\\";
+    private static final String FILEPATH = "src/main/resources/";
     private static final String DELIMITER = ",";
 
 

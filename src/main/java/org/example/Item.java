@@ -1,11 +1,12 @@
 package org.example;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class Item {
     private String name;
-    private double cost; //TODO Change to BigDecimal
+    private BigDecimal cost; //TODO Change to BigDecimal
     private int amount;
 
     public String getName() {
@@ -16,12 +17,12 @@ public class Item {
         this.name = name;
     }
 
-    public double getCost() {
-        return cost;
+    public BigDecimal getCost() {
+        return cost.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public void setCost(double cost) {
-        this.cost = cost;
+        this.cost = new BigDecimal(cost);
     }
 
     public int getAmount() {
