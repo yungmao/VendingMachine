@@ -51,8 +51,8 @@ public class Item {
     }
 
     /**
-     * Parsing item object as a string
-     * @return Parsed to string Item
+     * Parsing Product to string
+     * @return Item as a String
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();

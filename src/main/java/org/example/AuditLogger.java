@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * Used to save events during Vending Machine run.
+ * Used to save events during Vending Machine runtime.
  */
 public class AuditLogger {
     private static ArrayList<String> auditLogger = new ArrayList<String>();
 
     /**
-     * Method used to access Audit Logger
+     * Getter of Audit Logger
      * @return Audit Logger as an ArrayList
      */
     public static ArrayList<String> getAuditLogger() {
@@ -45,7 +45,7 @@ public class AuditLogger {
     }
 
     /**
-     * Method used to save current AuditLogger to text file
+     * Method used to save current AuditLogger as a text file
      */
     public static void saveAuditLogger() {
         StringBuilder content = new StringBuilder();

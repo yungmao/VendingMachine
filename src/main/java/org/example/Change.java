@@ -2,7 +2,6 @@ package org.example;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.function.BiFunction;
 
 /**
  * Class represents Coins as values of a dollar with method to display change as the number of coins.

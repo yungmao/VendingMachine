@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Used to read and write text files
+ * Used to read/write text file
  */
 public class FileIO_Handler {
 
@@ -46,7 +46,7 @@ public class FileIO_Handler {
 
 
     /**
-     * Method save ArrayList of Products in library to csv file
+     * Method save ArrayList of Products in library to csv file.
      * @param allItems ArrayList of all items in Vending Machine
      * @param output_name filename of output text file
      */
@@ -57,7 +57,7 @@ public class FileIO_Handler {
             for (int i = 0; i < allItems.size(); i++) {
                 Item item = allItems.get(i);
                 String metadata = item.toString();
-                bw.write(metadata + "\n");
+                bw.write(metadata);
                 bw.flush();
             }
             bw.close();

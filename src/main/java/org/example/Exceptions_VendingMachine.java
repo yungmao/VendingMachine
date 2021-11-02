@@ -1,5 +1,7 @@
 package org.example;
 
+import java.math.BigDecimal;
+
 /**
  * Super class consisting of distinct Exceptions in Vending Machine App
  */
@@ -9,8 +11,9 @@ public class Exceptions_VendingMachine extends Exception {
      * Exception used to handle case of a wanted item being more expensive than amount inserted by user
      */
     public static class InsuficientFundsException extends Exceptions_VendingMachine {
-        InsuficientFundsException() {
+        InsuficientFundsException(BigDecimal inserted_money) {
             System.out.println("Error: Insuficient funds");
+            System.out.println("Transaction canceled $" + inserted_money.toString() +" returned");
             AuditLogger.addEvent("Error: Insuficient funds");
         }
     }

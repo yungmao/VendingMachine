@@ -51,7 +51,7 @@ public class VendingMachine {
     }
 
     /**
-     * Method tries to sell product to user.
+     * Method attempts to sell product to user.
      */
     public void attemptSelling() {
         printAvailableProducts();
@@ -148,7 +148,7 @@ public class VendingMachine {
         BigDecimal customer_money = new BigDecimal(money);
         BigDecimal change = new BigDecimal(0);
         if (wanted_item_price.compareTo(customer_money) == 1) {
-            throw new Exceptions_VendingMachine.InsuficientFundsException();
+            throw new Exceptions_VendingMachine.InsuficientFundsException(customer_money.setScale(2,RoundingMode.HALF_EVEN));
         } else {
             change = customer_money.subtract(wanted_item_price);
             item.setAmount(item.getAmount() - 1);
